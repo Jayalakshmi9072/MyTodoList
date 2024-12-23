@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if task %}Edit Task{% else %}New Task{% endif %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"] {
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            text-align: center;
+            margin-top: 10px;
+            display: block;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .icon {
+            display: block;
+            margin: 0 auto 20px;
+            font-size: 50px;
+            color: #007bff;
+        }
+        .message {
+            color: #28a745;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <i class="fas fa-tasks icon"></i>
+        <h1>{% if task %}Edit Task{% else %}New Task{% endif %}</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{% if task %}Update{% else %}Create{% endif %}</button>
+            <a href="{% url 'task_list' %}">Cancel</a>
+        </form>
+        {% if messages %}
+            <div class="message">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
